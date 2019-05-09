@@ -2,25 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-// class Square extends React.Component {
-//   constructor (props) {
-//     super(props); // calls the parent constructor to get property inputs, all React component classes that have a constructor should start with `super(props)`
-
-//     this.state = { value: null };
-//   }
-
-//   render() {
-//     return (
-//       <button
-//       className = "square"
-//       onClick={ () => this.props.onClick() }>
-//         {this.props.value}
-//       </button>
-//     );
-//   }
-// }
-
-// the below function is the same as the commented-out code above, just simplifies Class > Function.
 function Square (props) {
   return (
     <button
