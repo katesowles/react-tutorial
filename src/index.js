@@ -9,7 +9,7 @@ class Game extends React.Component {
     super(props);
 
     this.state = {
-      history: [{ squares: Array(9).fill(null) }],
+      history: [{ squares: Array(9).fill(null), squareChanged: null }],
       stepNumber: 0,
       xIsNext: true,
     };
@@ -23,8 +23,9 @@ class Game extends React.Component {
     if (calculateWinner(squares) || squares[i]) return;
 
     squares[i] = this.state.xIsNext ? 'X' : 'O';
+
     this.setState({
-      history: history.concat([{ squares: squares }]), // concat, like slice, allows us to maintain immutability!
+      history: history.concat([{ squares: squares, squareChanged: i }]), // concat, like slice, allows us to maintain immutability!
       stepNumber: history.length,
       xIsNext: !this.state.xIsNext,
     });
@@ -41,8 +42,24 @@ class Game extends React.Component {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
+    const status = winner ? 'Winner: ' + winner : 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+    const locationText = (sqChanged) => {
+      switch (sqChanged) {
+        case 0: return '(column 1, row 1)';
+        case 1: return '(column 2, row 1)';
+        case 2: return '(column 3, row 1)';
+        case 3: return '(column 1, row 2)';
+        case 4: return '(column 2, row 2)';
+        case 5: return '(column 3, row 2)';
+        case 6: return '(column 1, row 3)';
+        case 7: return '(column 2, row 3)';
+        case 8: return '(column 3, row 3)';
+        default: return '';
+      }
+    }
     const moves = history.map((step, move) => {
       const desc = move ? 'Go to move #' + move : 'Go to game start';
+      const location = locationText(history[move].squareChanged);
 
       return (
         <li
@@ -50,7 +67,7 @@ class Game extends React.Component {
         className={(this.state.stepNumber === move ? 'current' : '')}>
           <button
           onClick={ () => this.jumpTo(move) }>
-            { desc }
+            { desc } { location }
           </button>
         </li>
       )
@@ -82,7 +99,7 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-// TODO 1: display the location for each move in the format (col, row) in the move history list
+// DONE: display the location for each move in the format (col, row) in the move history list
 // DONE: bold the currently selected item in the move list
 // DONE: rewrite board to use two loops to make the squares instead of hardcoding them
 // TODO 4: add a toggle button that lets you sort the moves in either ascending or descending order
