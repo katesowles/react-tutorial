@@ -4,12 +4,14 @@ import Square from './square.js';
 export default class Board extends React.Component {
   renderSquare (rowIndex, colIndex) {
     const i = (3 * colIndex) + rowIndex;
+    const combo = this.props.combo ? this.props.combo : null;
 
     return (
       <Square
       key={ i }
       value={ this.props.squares[i] }
-      onClick={ () => this.props.onClick(i) }/>
+      onClick={ () => this.props.onClick(i) }
+      winningCombo={ combo && (i === combo[0] || i === combo[1] || i === combo[2]) }/>
     );
   }
 

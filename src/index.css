@@ -33,6 +33,10 @@ ul {
     width: 34px;
 }
 
+.square.winningCombo {
+    background-color: #eee;
+}
+
 .square:focus {
     outline: none;
 }
