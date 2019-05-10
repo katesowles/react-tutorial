@@ -12,6 +12,7 @@ class Game extends React.Component {
       history: [{ squares: Array(9).fill(null), squareChanged: null }],
       stepNumber: 0,
       xIsNext: true,
+      sortAscend: true,
     };
   }
 
@@ -35,6 +36,12 @@ class Game extends React.Component {
     this.setState({
       stepNumber: step,
       xIsNext: (step % 2) === 0,
+    })
+  }
+
+  flipSort () {
+    this.setState({
+      sortAscend: !this.state.sortAscend
     })
   }
 
@@ -85,7 +92,10 @@ class Game extends React.Component {
         
         <div className = "game-info">
           <div> { status } </div>
-          <ol> { moves } </ol>
+          <ol> { this.state.sortAscend ? moves : moves.reverse() } </ol>
+          <button onClick={ () => this.flipSort() }>
+            { this.state.sortAscend ? 'Sort Descending' : 'Sort Ascending' }
+          </button>
         </div>
       </div>
     );
@@ -102,6 +112,6 @@ ReactDOM.render(
 // DONE: display the location for each move in the format (col, row) in the move history list
 // DONE: bold the currently selected item in the move list
 // DONE: rewrite board to use two loops to make the squares instead of hardcoding them
-// TODO 4: add a toggle button that lets you sort the moves in either ascending or descending order
+// DONE: add a toggle button that lets you sort the moves in either ascending or descending order
 // TODO 5: when someone wins, highlight the three squares that caused the win
 // TODO 6: when no one wins, display a message about the result being a draw
