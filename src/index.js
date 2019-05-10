@@ -46,15 +46,18 @@ class Game extends React.Component {
   }
 
   render () {
-    let winner, combo;
+    let winner, combo, draw;
     const history = this.state.history;
     const current = history[this.state.stepNumber];
     const calculation = calculateWinner(current.squares);
     if (calculation) {
-      winner = calculation.winner;
-      combo = calculation.combo;
+      winner = calculation.winner || null;
+      combo = calculation.combo || null;
+      draw = calculation.draw || null;
     };
-    const status = winner ? 'Winner: ' + winner : 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+    const status = winner ? 'Winner: ' + winner :
+          draw ? draw : 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+
     const locationText = (sqChanged) => {
       switch (sqChanged) {
         case 0: return '(column 1, row 1)';
@@ -120,4 +123,4 @@ ReactDOM.render(
 // DONE: rewrite board to use two loops to make the squares instead of hardcoding them
 // DONE: add a toggle button that lets you sort the moves in either ascending or descending order
 // DONE: when someone wins, highlight the three squares that caused the win
-// TODO 6: when no one wins, display a message about the result being a draw
+// DONE: when no one wins, display a message about the result being a draw

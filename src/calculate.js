@@ -10,6 +10,8 @@ export default function calculateWinner (squares) {
     [2, 4, 6],
   ];
 
+  if (squares.indexOf(null) === -1) return { draw: 'Game ends in a draw, better luck next time!' };
+
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
 
