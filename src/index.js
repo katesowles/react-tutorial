@@ -45,7 +45,9 @@ class Game extends React.Component {
       const desc = move ? 'Go to move #' + move : 'Go to game start';
 
       return (
-        <li key={ move }>
+        <li
+        key={ move } 
+        className={(this.state.stepNumber === move ? 'current' : '')}>
           <button
           onClick={ () => this.jumpTo(move) }>
             { desc }
@@ -54,7 +56,7 @@ class Game extends React.Component {
       )
     }
   )
-    let status;
+  let status;
 
     status = winner ? 'Winner: ' + winner : 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
 
@@ -84,7 +86,7 @@ ReactDOM.render(
 );
 
 // TODO 1: display the location for each move in the format (col, row) in the move history list
-// TODO 2: bold the currently selected item in the move list
+// DONE: bold the currently selected item in the move list
 // DONE: rewrite board to use two loops to make the squares instead of hardcoding them
 // TODO 4: add a toggle button that lets you sort the moves in either ascending or descending order
 // TODO 5: when someone wins, highlight the three squares that caused the win
