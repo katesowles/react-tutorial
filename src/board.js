@@ -1,24 +1,25 @@
 import React from 'react';
 import Square from './square.js';
 
-export default class Board extends React.Component {
-  renderSquare (rowIndex, colIndex) {
+export default function Board (props) {
+  const { combo, squares, onClick } = props;
+
+  function renderSquare (rowIndex, colIndex) {
     const i = (3 * colIndex) + rowIndex;
-    const combo = this.props.combo ? this.props.combo : null;
 
     return (
       <Square
       key={ i }
-      value={ this.props.squares[i] }
-      onClick={ () => this.props.onClick(i) }
-      winningCombo={ combo && (i === combo[0] || i === combo[1] || i === combo[2]) }/>
-    );
-  }
+      value={ squares[i] }
+      onClick={ () => onClick(i) }
+      winningCombo={ combo && (i === combo[0] || i === combo[1] || i === combo[2]) } />
+    )
+  };
 
-  renderColumns (rowIndex) {
+  function renderColumns (rowIndex) {
     let arr = [];
     for (let c = 0; c < 3; c++) {
-      arr.push( this.renderSquare(c, rowIndex) );
+      arr.push( renderSquare(c, rowIndex) );
     }
 
     return (
@@ -30,20 +31,15 @@ export default class Board extends React.Component {
     );
   }
 
-  renderRows () {
+  function renderRows () {
     let arr = [];
-    for (let r = 0; r < 3; r++) {
-      arr.push( this.renderColumns(r) );
+
+    for(let r = 0; r < 3; r++) {
+      arr.push( renderColumns(r) );
     }
 
     return arr;
   }
 
-  render () {
-    return (
-      <div>
-        { this.renderRows() }
-      </div>
-    );
-  }
-}
+  return (<div>{ renderRows() }</div>);
+} 
