@@ -12,13 +12,15 @@ export default function Board (props) {
       key={ i }
       value={ squares[i] }
       onClick={ () => onClick(i) }
+      // if current move matches any of winning combo indexes, pass winningCombo boolean to square for highlighting
       winningCombo={ combo && (i === combo[0] || i === combo[1] || i === combo[2]) } />
     )
   };
 
   function renderColumns (rowIndex) {
     let arr = [];
-    for (let c = 0; c < 3; c++) {
+    
+    for(let c = 0; c < 3; c++) {
       arr.push( renderSquare(c, rowIndex) );
     }
 
@@ -41,5 +43,9 @@ export default function Board (props) {
     return arr;
   }
 
-  return (<div>{ renderRows() }</div>);
+  return (
+    <div>
+      { renderRows() }
+    </div>
+  );
 } 

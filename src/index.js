@@ -21,8 +21,10 @@ class Game extends React.Component {
     const current = history[history.length - 1];
     const squares = current.squares.slice(); // slice allows us to maintain immutablity, which makes "time travel" possible later
 
+    // if winning combo is found OR if you click on a square that's already occupied, exit
     if (calculateWinner(squares) || squares[i]) return;
 
+    // set square's content to X or O
     squares[i] = this.state.xIsNext ? 'X' : 'O';
 
     this.setState({
@@ -50,11 +52,13 @@ class Game extends React.Component {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
     const calculation = calculateWinner(current.squares);
+
     if (calculation) {
       winner = calculation.winner || null;
       combo = calculation.combo || null;
       draw = calculation.draw || null;
     };
+    
     const status = winner ? 'Winner: ' + winner :
           draw ? draw : 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
 
@@ -72,6 +76,7 @@ class Game extends React.Component {
         default: return '';
       }
     }
+
     const moves = history.map((step, move) => {
       const desc = move ? 'Go to move #' + move : 'Go to game start';
       const location = locationText(history[move].squareChanged);
@@ -86,8 +91,7 @@ class Game extends React.Component {
           </button>
         </li>
       )
-    }
-  )
+    })
 
     return (
       <div className = "game">
@@ -101,6 +105,7 @@ class Game extends React.Component {
         
         <div className = "game-info">
           <div> { status } </div>
+
           <ol> { this.state.sortAscend ? moves : moves.reverse() } </ol>
           <button onClick={ () => this.flipSort() }>
             { this.state.sortAscend ? 'Sort Descending' : 'Sort Ascending' }
@@ -124,3 +129,5 @@ ReactDOM.render(
 // DONE: add a toggle button that lets you sort the moves in either ascending or descending order
 // DONE: when someone wins, highlight the three squares that caused the win
 // DONE: when no one wins, display a message about the result being a draw
+// DONE: refactor as many class-defined components into function-defined components as possible
+// TODO: incorporate hooks in order to turn remaining class-defined components into function-defined comps
