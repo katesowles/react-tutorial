@@ -1,4 +1,6 @@
 import React from 'react';
+import styled from 'styled-components'; 
+
 import Square from './square.js';
 
 export default function Board (props) {
@@ -15,7 +17,27 @@ export default function Board (props) {
       // if current move matches any of winning combo indexes, pass winningCombo boolean to square for highlighting
       winningCombo={ combo && (i === combo[0] || i === combo[1] || i === combo[2]) } />
     )
-  };
+	};
+	
+	const Row = ({children, ...props}) => {
+		const {
+			rowIndex
+		} = props;
+
+		const StyledRow = styled.div`
+			&:after {
+				clear: both;
+				content: "";
+				display: table;
+			}
+		`;
+
+		return (
+			<StyledRow>
+				{ children }
+			</StyledRow>
+		);
+	}
 
   function renderColumns (rowIndex) {
     let arr = [];
@@ -25,11 +47,9 @@ export default function Board (props) {
     }
 
     return (
-      <div
-      key={ rowIndex }
-      className="board-row">
+      <Row key={ rowIndex } >
         {arr}
-      </div>
+      </Row>
     );
   }
 

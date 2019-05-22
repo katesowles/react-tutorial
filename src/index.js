@@ -1,8 +1,34 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import styled from 'styled-components'; 
+
 import Board from './board.js';
 import calculateWinner from './calculate.js';
+
+const StyledGame = styled.div`
+	display: flex;
+	flex-direction: row;
+	font: 14px "Century Gothic", Futura, sans-serif;
+	margin: 20px 10px;
+`;
+
+const StyledStatus = styled.div`
+	margin-bottom: 10px;
+`;
+
+const StyledGameInfo = styled.div`
+	margin-left: 20px;
+`;
+
+const StyledOrderedList = styled.ol`
+	padding-left: 30px;
+`;
+
+const StyledNestedListButton = styled.li`
+	&.current button {
+		font-weight: 900;
+	}
+`;
 
 class Game extends React.Component {
   constructor (props) {
@@ -14,8 +40,8 @@ class Game extends React.Component {
       xIsNext: true,
       sortAscend: true,
     };
-  }
-
+	}
+	
   handleClick (i) {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
@@ -82,36 +108,37 @@ class Game extends React.Component {
       const location = locationText(history[move].squareChanged);
 
       return (
-        <li
+        <StyledNestedListButton
         key={ move } 
         className={(this.state.stepNumber === move ? 'current' : '')}>
           <button
           onClick={ () => this.jumpTo(move) }>
             { desc } { location }
           </button>
-        </li>
+        </StyledNestedListButton>
       )
     })
 
     return (
-      <div className = "game">
-        <div className = "game-board">
-          <Board
-            combo={ combo }
-            squares={ current.squares }
-            onClick={ (i) => this.handleClick(i) }
-          />
-        </div>
+			<StyledGame>
+				<Board
+					combo={ combo }
+					squares={ current.squares }
+					onClick={ (i) => this.handleClick(i) }
+				/>
         
-        <div className = "game-info">
-          <div> { status } </div>
+        <StyledGameInfo>
+          <StyledStatus> { status } </StyledStatus>
 
-          <ol> { this.state.sortAscend ? moves : moves.reverse() } </ol>
+					<StyledOrderedList>
+						{ this.state.sortAscend ? moves : moves.reverse() }
+					</StyledOrderedList>
+
           <button onClick={ () => this.flipSort() }>
             { this.state.sortAscend ? 'Sort Descending' : 'Sort Ascending' }
           </button>
-        </div>
-      </div>
+        </StyledGameInfo>
+			</StyledGame>
     );
   }
 }
@@ -131,3 +158,4 @@ ReactDOM.render(
 // DONE: when no one wins, display a message about the result being a draw
 // DONE: refactor as many class-defined components into function-defined components as possible
 // TODO: incorporate hooks in order to turn remaining class-defined components into function-defined comps
+// DONE: refactor all the styles from index.css to styled components
