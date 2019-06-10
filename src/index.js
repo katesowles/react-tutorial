@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import styled from "styled-components";
 
 import Board from "./board.js";
+import Info from "./info.js";
 import calculateWinner from "./calculate.js";
 
 const StyledGame = styled.div`
@@ -10,24 +11,6 @@ const StyledGame = styled.div`
   flex-direction: row;
   font: 14px "Century Gothic", Futura, sans-serif;
   margin: 20px 10px;
-`;
-
-const StyledStatus = styled.div`
-  margin-bottom: 10px;
-`;
-
-const StyledGameInfo = styled.div`
-  margin-left: 20px;
-`;
-
-const StyledOrderedList = styled.ol`
-  padding-left: 30px;
-`;
-
-const StyledNestedListButton = styled.li`
-  &.current button {
-    font-weight: 900;
-  }
 `;
 
 function Game() {
@@ -39,21 +22,10 @@ function Game() {
   ]);
   const [stepNumber, setStep] = useState(0);
   const [xIsNext, setNextPlayer] = useState(true);
-  const [sortAscend, setSortDirection] = useState(true);
 
   useEffect(() => {
     // console.log("useEffect", sortAscend);
   });
-
-  function sortButtonText() {
-    return sortAscend ? "Sort Descending" : "Sort Ascending";
-
-    // return <button onClick={() => flipSort()}>{sortButtonText}</button>;
-  }
-
-  function sortButton() {
-    return <button onClick={() => flipSort()}>{sortButtonText()}</button>;
-  }
 
   function handleClick(i) {
     // slice allows us to maintain immutablity, which makes "time travel" possible later
@@ -70,16 +42,6 @@ function Game() {
     setHistory(clickHistory.concat([{ squares: squares, squareChanged: i }]));
     setStep(clickHistory.length);
     setNextPlayer(!xIsNext);
-  }
-
-  function jumpTo(step) {
-    console.log("jumpTo", step);
-    setStep(step);
-    setNextPlayer(step % 2 === 0);
-  }
-
-  function flipSort() {
-    setSortDirection(!sortAscend);
   }
 
   let winner, combo, draw;
@@ -99,47 +61,6 @@ function Game() {
     ? draw
     : "Next player: " + (xIsNext ? "X" : "O");
 
-  const locationText = sqChanged => {
-    switch (sqChanged) {
-      case 0:
-        return "(column 1, row 1)";
-      case 1:
-        return "(column 2, row 1)";
-      case 2:
-        return "(column 3, row 1)";
-      case 3:
-        return "(column 1, row 2)";
-      case 4:
-        return "(column 2, row 2)";
-      case 5:
-        return "(column 3, row 2)";
-      case 6:
-        return "(column 1, row 3)";
-      case 7:
-        return "(column 2, row 3)";
-      case 8:
-        return "(column 3, row 3)";
-      default:
-        return "";
-    }
-  };
-
-  const moves = history.map((step, move) => {
-    const desc = move ? "Go to move #" + move : "Go to game start";
-    const location = locationText(history[move].squareChanged);
-
-    return (
-      <StyledNestedListButton
-        key={move}
-        className={stepNumber === move ? "current" : ""}
-      >
-        <button onClick={() => jumpTo(move)}>
-          {desc} {location}
-        </button>
-      </StyledNestedListButton>
-    );
-  });
-
   return (
     <StyledGame>
       <Board
@@ -148,16 +69,13 @@ function Game() {
         onClick={i => handleClick(i)}
       />
 
-      <StyledGameInfo>
-        <StyledStatus> {status} </StyledStatus>
-
-        <StyledOrderedList>
-          {sortAscend ? moves : moves.reverse()}
-        </StyledOrderedList>
-
-        {sortButton()}
-        {/* <button onClick={() => flipSort()}>{sortButtonText()}</button> */}
-      </StyledGameInfo>
+      <Info
+        status={status}
+        history={history}
+        stepNumber={stepNumber}
+        setStep={setStep}
+        setNextPlayer={setNextPlayer}
+      />
     </StyledGame>
   );
 }
