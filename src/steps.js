@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import styled from "styled-components";
 
 import SortButton from "./sort";
@@ -67,11 +67,11 @@ function Steps(props) {
   const arr = sortAscend ? moves : moves.reverse();
 
   return (
-    <div>
+    <Fragment>
       <StyledOrderedList>{arr}</StyledOrderedList>
 
       <SortButton sortAscend={sortAscend} setSortDirection={setSortDirection} />
-    </div>
+    </Fragment>
   );
 }
 
