@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+import SortButton from "./sort";
+
 const StyledOrderedList = styled.ol`
   padding-left: 30px;
 `;
@@ -15,18 +17,6 @@ function Steps(props) {
   const { history, stepNumber, setStep, setNextPlayer } = props;
 
   const [sortAscend, setSortDirection] = useState(true);
-
-  function flipSort() {
-    setSortDirection(!sortAscend);
-  }
-
-  function sortButtonText() {
-    return sortAscend ? "Sort Descending" : "Sort Ascending";
-  }
-
-  function sortButton() {
-    return <button onClick={() => flipSort()}>{sortButtonText()}</button>;
-  }
 
   const locationText = sqChanged => {
     switch (sqChanged) {
@@ -53,11 +43,11 @@ function Steps(props) {
     }
   };
 
-  function jumpTo(step) {
+  const jumpTo = step => {
     console.log("jumpTo", step);
     setStep(step);
     setNextPlayer(step % 2 === 0);
-  }
+  };
 
   const moves = history.map((step, move) => {
     const desc = move ? "Go to move #" + move : "Go to game start";
@@ -81,7 +71,8 @@ function Steps(props) {
         {sortAscend ? moves : moves.reverse()}
       </StyledOrderedList>
 
-      {sortButton()}
+      {/* {sortButton()} */}
+      <SortButton sortAscend={sortAscend} setSortDirection={setSortDirection} />
     </div>
   );
 }
