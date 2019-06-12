@@ -2,16 +2,13 @@ import React from "react";
 
 function SortButton(props) {
   const { sortAscend, setSortDirection } = props;
+  const buttonLabel = sortAscend ? "Sort Descending" : "Sort Ascending";
 
-  const flipSort = () => {
+  function flipSort() {
     setSortDirection(!sortAscend);
-  };
+  }
 
-  return (
-    <button onClick={() => flipSort()}>
-      {sortAscend ? "Sort Descending" : "Sort Ascending"}
-    </button>
-  );
+  return <button onClick={() => flipSort()}>{buttonLabel}</button>;
 }
 
 export default SortButton;

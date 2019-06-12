@@ -18,7 +18,7 @@ function Steps(props) {
 
   const [sortAscend, setSortDirection] = useState(true);
 
-  const locationText = sqChanged => {
+  function locationText(sqChanged) {
     switch (sqChanged) {
       case 0:
         return "(column 1, row 1)";
@@ -41,12 +41,12 @@ function Steps(props) {
       default:
         return "";
     }
-  };
+  }
 
-  const jumpTo = step => {
+  function jumpTo(step) {
     setStep(step);
     setNextPlayer(step % 2 === 0);
-  };
+  }
 
   const moves = history.map((step, move) => {
     const desc = move ? "Go to move #" + move : "Go to game start";
@@ -64,11 +64,11 @@ function Steps(props) {
     );
   });
 
+  const arr = sortAscend ? moves : moves.reverse();
+
   return (
     <div>
-      <StyledOrderedList>
-        {sortAscend ? moves : moves.reverse()}
-      </StyledOrderedList>
+      <StyledOrderedList>{arr}</StyledOrderedList>
 
       <SortButton sortAscend={sortAscend} setSortDirection={setSortDirection} />
     </div>

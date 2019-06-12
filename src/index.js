@@ -112,5 +112,5 @@ ReactDOM.render(<Game />, document.getElementById("root"));
 // DONE: when someone wins, highlight the three squares that caused the win
 // DONE: when no one wins, display a message about the result being a draw
 // DONE: refactor as many class-defined components into function-defined components as possible
-// TODO: incorporate hooks in order to turn remaining class-defined components into function-defined comps
+// DONE: incorporate hooks in order to turn remaining class-defined components into function-defined comps
 // DONE: refactor all the styles from index.css to styled components

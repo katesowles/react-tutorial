@@ -21,7 +21,7 @@ const StyledSquare = styled.button`
   }
 `;
 
-export const Square = props => {
+export function Square(props) {
   const { index, onClick, combo, value } = props;
 
   return (
@@ -32,6 +32,6 @@ export const Square = props => {
       {value}
     </StyledSquare>
   );
-};
+}
 
 export default Square;
