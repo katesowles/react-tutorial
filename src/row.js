@@ -8,7 +8,6 @@ const StyledRow = styled.div`
     clear: both;
     content: "";
     display: table;
-    background-color: red !important;
   }
 `;
 

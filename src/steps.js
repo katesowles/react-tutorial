@@ -44,7 +44,6 @@ function Steps(props) {
   };
 
   const jumpTo = step => {
-    console.log("jumpTo", step);
     setStep(step);
     setNextPlayer(step % 2 === 0);
   };

@@ -7,11 +7,11 @@ function SortButton(props) {
     setSortDirection(!sortAscend);
   };
 
-  const sortButtonText = () => {
-    return sortAscend ? "Sort Descending" : "Sort Ascending";
-  };
-
-  return <button onClick={() => flipSort()}>{sortButtonText()}</button>;
+  return (
+    <button onClick={() => flipSort()}>
+      {sortAscend ? "Sort Descending" : "Sort Ascending"}
+    </button>
+  );
 }
 
 export default SortButton;
