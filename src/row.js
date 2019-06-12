@@ -13,19 +13,24 @@ const StyledRow = styled.div`
 `;
 
 function Row(props) {
-  const { combo, squares, onClick } = props;
+  const { rowIndex, combo, squares, onClick } = props;
 
   let arr = [];
 
-  for (let r = 0; r < 3; r++) {
+  for (let col = 0; col < 3; col++) {
     arr.push(
-      <StyledRow key={r}>
-        <Column rowIndex={r} combo={combo} square={squares} onClick={onClick} />
-      </StyledRow>
+      <Column
+        key={col}
+        columnIndex={col}
+        rowIndex={rowIndex}
+        combo={combo}
+        squares={squares}
+        onClick={onClick}
+      />
     );
   }
 
-  return arr;
+  return <StyledRow>{arr}</StyledRow>;
 }
 
 export default Row;

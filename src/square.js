@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const StyledSquare = styled.button`
   background: #fff;
-  background-color: ${props => (props.winningCombo ? "#eee" : "transparent")};
+  background-color: ${props => (props.combo ? "#eee" : "transparent")};
   border: 1px solid #999;
   float: left;
   font-size: 24px;
@@ -22,13 +22,12 @@ const StyledSquare = styled.button`
 `;
 
 export const Square = props => {
-  const { onClick, winningCombo, value } = props;
+  const { index, onClick, combo, value } = props;
 
   return (
     <StyledSquare
-      winningCombo={winningCombo}
-      className="square"
-      onClick={onClick}
+      combo={combo && combo.indexOf(index) !== -1}
+      onClick={() => onClick(index)}
     >
       {value}
     </StyledSquare>

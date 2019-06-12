@@ -63,11 +63,7 @@ function Game() {
 
   return (
     <StyledGame>
-      <Board
-        combo={combo}
-        squares={current.squares}
-        onClick={i => handleClick(i)}
-      />
+      <Board combo={combo} squares={current.squares} onClick={handleClick} />
 
       <Info
         status={status}
