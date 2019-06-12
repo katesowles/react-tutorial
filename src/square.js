@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
+import { HandleSquareClick } from "./context";
 
 const StyledSquare = styled.button`
   background: #fff;
@@ -22,12 +23,13 @@ const StyledSquare = styled.button`
 `;
 
 export function Square(props) {
-  const { index, onClick, combo, value } = props;
+  const handleClick = useContext(HandleSquareClick);
+  const { index, combo, value } = props;
 
   return (
     <StyledSquare
       combo={combo && combo.indexOf(index) !== -1}
-      onClick={() => onClick(index)}
+      onClick={() => handleClick(index)}
     >
       {value}
     </StyledSquare>

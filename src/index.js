@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import styled from "styled-components";
 
-import Board from "./board.js";
-import Info from "./info.js";
+import { HandleSquareClick } from "./context";
+import Board from "./board";
+import Info from "./info";
 
 const StyledGame = styled.div`
   display: flex;
@@ -88,15 +89,17 @@ function Game() {
 
   return (
     <StyledGame>
-      <Board combo={combo} squares={current.squares} onClick={handleClick} />
+      <HandleSquareClick.Provider value={handleClick}>
+        <Board combo={combo} squares={current.squares} />
 
-      <Info
-        status={status}
-        history={history}
-        stepNumber={stepNumber}
-        setStep={setStep}
-        setNextPlayer={setNextPlayer}
-      />
+        <Info
+          status={status}
+          history={history}
+          stepNumber={stepNumber}
+          setStep={setStep}
+          setNextPlayer={setNextPlayer}
+        />
+      </HandleSquareClick.Provider>
     </StyledGame>
   );
 }

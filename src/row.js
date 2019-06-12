@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import Column from "./column.js";
+import Column from "./column";
 
 const StyledRow = styled.div`
   &:after {
@@ -12,7 +12,7 @@ const StyledRow = styled.div`
 `;
 
 function Row(props) {
-  const { rowIndex, combo, squares, onClick } = props;
+  const { rowIndex, combo, squares } = props;
 
   let arr = [];
 
@@ -24,7 +24,6 @@ function Row(props) {
         rowIndex={rowIndex}
         combo={combo}
         squares={squares}
-        onClick={onClick}
       />
     );
   }
