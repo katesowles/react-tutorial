@@ -71,7 +71,6 @@ function Steps(props) {
         {sortAscend ? moves : moves.reverse()}
       </StyledOrderedList>
 
-      {/* {sortButton()} */}
       <SortButton sortAscend={sortAscend} setSortDirection={setSortDirection} />
     </div>
   );
