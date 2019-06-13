@@ -9,18 +9,13 @@ const StyledGameInfo = styled.div`
 `;
 
 function Info(props) {
-  const { status, stepNumber, history, setStep, setNextPlayer } = props;
+  const { status, stepNumber, history } = props;
 
   return (
     <StyledGameInfo>
       <Status status={status} />
 
-      <Steps
-        history={history}
-        stepNumber={stepNumber}
-        setStep={setStep}
-        setNextPlayer={setNextPlayer}
-      />
+      <Steps history={history} stepNumber={stepNumber} />
     </StyledGameInfo>
   );
 }

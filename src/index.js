@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import styled from "styled-components";
 
-import { HandleSquareClick } from "./context";
+import {
+  HandleSquareClick,
+  HandleSetNextPlayer,
+  HandleSetStep
+} from "./context";
 import Board from "./board";
 import Info from "./info";
 
@@ -89,17 +93,15 @@ function Game() {
 
   return (
     <StyledGame>
+      <HandleSetStep.Provider value={setStep}>
+        <HandleSetNextPlayer.Provider value={setNextPlayer}>
       <HandleSquareClick.Provider value={handleClick}>
         <Board combo={combo} squares={current.squares} />
 
-        <Info
-          status={status}
-          history={history}
-          stepNumber={stepNumber}
-          setStep={setStep}
-          setNextPlayer={setNextPlayer}
-        />
+            <Info status={status} history={history} stepNumber={stepNumber} />
       </HandleSquareClick.Provider>
+        </HandleSetNextPlayer.Provider>
+      </HandleSetStep.Provider>
     </StyledGame>
   );
 }
