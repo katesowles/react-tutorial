@@ -27,18 +27,18 @@ function Game() {
   const [stepNumber, setStep] = useState(0);
   const [xIsNext, setNextPlayer] = useState(true);
 
-  function calculateWinner(squares) {
-    const lines = [
-      [0, 1, 2], // top row
-      [3, 4, 5], // middle row
-      [6, 7, 8], // bottom row
-      [0, 3, 6], // left column
-      [1, 4, 7], // middle column
-      [2, 5, 8], // right column
-      [0, 4, 8], // diag top left to bottom right
-      [2, 4, 6] // diag top right to bottom left
-    ];
+  const lines = [
+    [0, 1, 2], // top row
+    [3, 4, 5], // middle row
+    [6, 7, 8], // bottom row
+    [0, 3, 6], // left column
+    [1, 4, 7], // middle column
+    [2, 5, 8], // right column
+    [0, 4, 8], // diag top left to bottom right
+    [2, 4, 6] // diag top right to bottom left
+  ];
 
+  function calculateWinner(squares) {
     // if no additional empty squares, exit and show 'draw' text in game info
     if (squares.indexOf(null) === -1)
       return { draw: "Game ends in a draw, better luck next time!" };
@@ -57,49 +57,49 @@ function Game() {
     return null;
   }
 
-  function handleClick(i) {
+  function handleClick(index) {
     // slice allows us to maintain immutablity, which makes "time travel" possible later
     const clickHistory = history.slice(0, stepNumber + 1);
     const current = clickHistory[clickHistory.length - 1];
     const squares = current.squares.slice();
 
     // if winning combo is found OR if you click on a square that's already occupied, exit
-    if (calculateWinner(squares) || squares[i]) return;
+    if (calculateWinner(squares) || squares[index]) return;
 
     // set square's content to X or O
-    squares[i] = xIsNext ? "X" : "O";
+    squares[index] = xIsNext ? "X" : "O";
 
-    setHistory(clickHistory.concat([{ squares: squares, squareChanged: i }]));
+    setHistory(
+      clickHistory.concat([{ squares: squares, squareChanged: index }])
+    );
     setStep(clickHistory.length);
     setNextPlayer(!xIsNext);
   }
 
-  let winner, combo, draw;
-
   const current = history[stepNumber];
   const calculation = calculateWinner(current.squares);
+  const winner = !!calculation ? calculation.winner : null;
+  const combo = !!calculation ? calculation.combo : null;
+  const draw = !!calculation ? calculation.draw : null;
+  let status;
 
-  if (calculation) {
-    winner = calculation.winner || null;
-    combo = calculation.combo || null;
-    draw = calculation.draw || null;
+  if (winner) {
+    status = "Winner: " + winner;
+  } else if (draw) {
+    status = draw;
+  } else {
+    status = "Next player: " + (xIsNext ? "X" : "O");
   }
-
-  const status = winner
-    ? "Winner: " + winner
-    : draw
-    ? draw
-    : "Next player: " + (xIsNext ? "X" : "O");
 
   return (
     <StyledGame>
       <HandleSetStep.Provider value={setStep}>
         <HandleSetNextPlayer.Provider value={setNextPlayer}>
-      <HandleSquareClick.Provider value={handleClick}>
-        <Board combo={combo} squares={current.squares} />
+          <HandleSquareClick.Provider value={handleClick}>
+            <Board combo={combo} squares={current.squares} />
 
             <Info status={status} history={history} stepNumber={stepNumber} />
-      </HandleSquareClick.Provider>
+          </HandleSquareClick.Provider>
         </HandleSetNextPlayer.Provider>
       </HandleSetStep.Provider>
     </StyledGame>
